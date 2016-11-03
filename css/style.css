@@ -1,0 +1,47 @@
+.input[type=text] {
+    width: 500px;
+}
+li {
+    font-family: monospace;
+    color: white;
+    cursor: pointer;
+    padding: .3em;
+}
+.search-box {
+    margin-left: 20px;
+}
+.index {
+    margin-bottom: 20px;
+    border: 0px solid #000000;
+    background-color: #2e3235;
+    width: 100%;
+    height: 300px;
+}
+#map {
+    border: 7px solid #5c5c5c;
+    width: 99%;
+    height: 400px;
+}
+.head {
+    font-style: oblique;
+    text-align: center;
+    color: #ffffff;
+}
+h4 {
+    margin-left: 20px;
+    font-style: italic;
+    color: #ffffff;
+}
+body {
+    background-image: url("images/google-maps-local-search1-ss-1920-800x450.jpg");
+}
+.wikipedia-container {
+    color: white;
+    width: 100%;
+    font-family: monospace;
+    background-color: #2e3235;
+    height: 180px;
+}
+a {
+    color: white;
+}
