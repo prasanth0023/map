@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Neighbourhood Map</title>
+    <link href="css/style.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name=viewport content="width=device-width, initial-scale=1"> </head>
+
+<body>
+    <div>
+        <div class=index>
+            <div>
+                <h1 class=head>Neigbourhood Map</h1>
+                <h4>Search your Favorite Places</h4> </div>
+            <div class=search-box>
+                <form id="form-container" class="form-container">
+                    <input type="text" placeholder="Search...." data-bind="textInput: query" id="city" value=""> </form>
+            </div>
+            <div id="list">
+                <ul data-bind="foreach: search">
+                    <li data-bind="text: title, click: $parent.clickFunction"> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="map"> </div>
+    <div class="wikipedia-container">
+        <h3 id="wikipedia-header">Relevant Wikipedia Links</h3>
+        <ul id="wikipedia-links"  > </ul>
+    </div>
+    <div> </div>
+    <script   src="js/jquery-2.2.1.js"></script>
+    <script onerror="googleFailure()" async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKR8qbRAEIiUioUlUmhamhwUfZAljagXA&callback=myMap"></script>
+    <script src="js/knockout-3.4.0.js"></script>
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
