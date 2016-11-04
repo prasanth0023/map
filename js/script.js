@@ -55,34 +55,7 @@ function myMap() {
 
     ko.applyBindings(new AppViewModel());
 }
-//function to load the wiki links to the wikipedia-container(DOM)element
-function loadData(marker) {
 
-    var $wikiElem = $('#wikipedia-links');
-    // clear out old data before new request
-    $wikiElem.text("");
-    var marker=marker;
-    // load streetview
-    marker.addListener('click', toggleBounce(marker));
-    var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json';
-    var wikiRequestTimeout = setTimeout(function() {
-        $wikiElem.text("failed to get wikipedia resources");
-    }, 10000);
-    $.ajax({
-        url: wikiUrl,
-        dataType: "jsonp",
-    }).success(function(response) {
-        var articleList = response[1];
-        var marker = marker;
-        for (var i = 0; i < articleList.length; i++) {
-            articleStr = articleList[i];
-            var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-        $wikiElem.append('<li><a href="' + url + '">' + articleStr + '</a></li>');
-        }
-        clearTimeout(wikiRequestTimeout);
-    });
-    return false;
-}
 //function to bounce the marker wehn selected
 function toggleBounce(marker) {
     if (marker.getAnimation() !== null) {
@@ -106,6 +79,44 @@ self.myMap=ko.observable(myMap);
         map.setCenter(temples.location);
         loadData(temples.markerObject);
     };
+
+
+self.wikiData = ko.observableArray([{title: ko.observable(), url: ko.observable()}]);
+
+    //function to load the wiki links to the wikipedia-container(DOM)element
+    function loadData(marker) {
+
+
+
+
+        var marker=marker;
+        // load streetview
+        marker.addListener('click', toggleBounce(marker));
+        var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json';
+        var wikiRequestTimeout = setTimeout(function() {
+            $wikiElem.text("failed to get wikipedia resources");
+        }, 10000);
+        $.ajax({
+            url: wikiUrl,
+            dataType: "jsonp",
+        }).success(function(response) {
+            var articleList = response[1];
+             self.wikiData = ko.observableArray([]);
+            var marker = marker;
+            for (var i = 0; i < articleList.length; i++) {
+                articleStr = articleList[i];
+                self.wikiData.push({
+            title: ko.observable(articleStr),
+            url: ko.observable("http://en.wikipedia.org/wiki/" + articleStr)
+          });
+            }
+            clearTimeout(wikiRequestTimeout);
+        });
+        return false;
+    }
+
+
+
     self.query = ko.observable('');
      //this block is for search and filter
     self.search = ko.computed(function() {
@@ -114,15 +125,14 @@ self.myMap=ko.observable(myMap);
 
         var newArray = ko.utils.arrayFilter(self.temples(), function(gallery)  {
     if(gallery.title.toLowerCase().indexOf(self.query().toLowerCase()) >= 0) {
-      if(gallery.marker) {
-          gallery.marker.setVisible(true);
+      if(gallery.markerObject) {
+          gallery.markerObject.setVisible(true);
       }
       return true;
     }else {
-      if(gallery.marker) {
-          gallery.marker.setVisible(false);
-      }
-      return false;
+
+          gallery.markerObject.setVisible(false);
+
     }
 });
 return newArray;
