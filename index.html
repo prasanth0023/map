@@ -27,7 +27,12 @@
     <div id="map"> </div>
     <div class="wikipedia-container">
         <h3 id="wikipedia-header">Relevant Wikipedia Links</h3>
-        <ul id="wikipedia-links"  > </ul>
+      <ul data-bind="foreach: wikiData">
+        <li class="wiki-list-item">
+    <a data-bind="text: title, attr:{href: url}"></a>
+  </li>
+       </ul>
+
     </div>
     <div> </div>
     <script   src="js/jquery-2.2.1.js"></script>
